@@ -1,0 +1,9 @@
+#!/Users/sethb/Development/AppEngine/badpoetry/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'nose==0.9.2.dev-r143','console_scripts','nosetests'
+__requires__ = 'nose==0.9.2.dev-r143'
+import sys
+from pkg_resources import load_entry_point
+
+sys.exit(
+   load_entry_point('nose==0.9.2.dev-r143', 'console_scripts', 'nosetests')()
+)

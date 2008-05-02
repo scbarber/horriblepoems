@@ -1,0 +1,2 @@
+recursive-include badpoetry/public *
+recursive-include badpoetry/templates *

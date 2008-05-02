@@ -1,0 +1,9 @@
+#!/Users/sethb/Development/AppEngine/badpoetry/bin/python
+# EASY-INSTALL-ENTRY-SCRIPT: 'PasteScript==1.6.2','console_scripts','paster'
+__requires__ = 'PasteScript==1.6.2'
+import sys
+from pkg_resources import load_entry_point
+
+sys.exit(
+   load_entry_point('PasteScript==1.6.2', 'console_scripts', 'paster')()
+)
