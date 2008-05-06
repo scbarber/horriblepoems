@@ -1,6 +1,8 @@
 <%inherit file="${context.get('c').layout or context.get('g').layout}"/>
 <%def name="title()">bad poems are good!</%def>
 
+<style type="text/css">DIV#add_poem { display: none; }</style>
+<a href="#" onclick="document.getElementById('add_poem').style.display = 'block'">+ Add a poem</a> 
 <%include file="/elements/new_poem.mako" />
 
 % for p in c.poems:
