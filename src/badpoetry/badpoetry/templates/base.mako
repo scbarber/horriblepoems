@@ -9,6 +9,10 @@
   ${h.stylesheet_link_tag('style.css')}
 </head>
 <body>
+	<div id="header"><img src="/images/header.gif"></div>
+	<div id="workingheader">
+	</div>
+
 	${next.body()}
 </body>
 </html>
