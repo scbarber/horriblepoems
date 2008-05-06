@@ -17,7 +17,7 @@
 				${h.link_to(tag, h.url(controller="tags", action="show", id=tag))}
 			% endfor
 		</div>
-		<div class="permalink">${h.link_to('(permalink)', h.url(action="show", id=p.key()))}</div>
+		<div class="permalink">${h.link_to('(permalink)', h.url(action="show", id=p.key().id()))}</div>
 	</div>
 	<div class="content">
 		${h.simple_format(p.content)}
