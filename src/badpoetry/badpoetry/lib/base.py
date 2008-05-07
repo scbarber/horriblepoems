@@ -14,13 +14,15 @@ import badpoetry.lib.helpers as h
 import badpoetry.model as model
 
 class BaseController(WSGIController):
-
-    def __call__(self, environ, start_response):
-        """Invoke the Controller"""
-        # WSGIController.__call__ dispatches to the Controller method
-        # the request is routed to. This routing information is
-        # available in environ['pylons.routes_dict']
-        return WSGIController.__call__(self, environ, start_response)
+	def __init__(self):
+		g.tags = model.Tag().all().order('-count').order('tag').fetch(limit=10)
+	
+	def __call__(self, environ, start_response):
+		"""Invoke the Controller"""
+		# WSGIController.__call__ dispatches to the Controller method
+		# the request is routed to. This routing information is
+		# available in environ['pylons.routes_dict']
+		return WSGIController.__call__(self, environ, start_response)
 
 # Include the '_' function in the public names
 __all__ = [__name for __name in locals().keys() if not __name.startswith('_') \

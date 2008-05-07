@@ -6,9 +6,6 @@ from badpoetry.lib.base import *
 log = logging.getLogger(__name__)
 
 class PoemsController(BaseController):
-	def __init__(self):
-		g.tags = model.Tag().all().order('-count').order('tag').fetch(limit=10)
-	
 	def index(self):
 		#query = db.Query(model.Poem)
 		c.poems = model.Poem.all().order('-created')
