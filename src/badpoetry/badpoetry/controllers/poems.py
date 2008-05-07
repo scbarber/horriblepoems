@@ -1,6 +1,8 @@
 import logging
 from datetime import datetime, timedelta
-#from google.appengine.api import users
+
+from google.appengine.api import users
+#from google.appengine.ext import db
 
 from badpoetry.lib.base import *
 
@@ -71,7 +73,7 @@ class PoemsController(BaseController):
 		p.tags = request.POST.get('tags').strip().split(' ')
 		p.author = self.user
 		p.put()
-
+		
 		for tag in p.tags:
 			t = model.Tag.all().filter('tag = ', tag).get()
 			if t:
@@ -131,4 +133,8 @@ class PoemsController(BaseController):
 				tag.put()
 		poem.delete()
 		redirect_to("/")
+	
+	def author(self, id):
+		c.poems = model.Poem.all().filter('author = ', users.User(id)).order('-created')
+		return render('/poems/index.mako')
 	
