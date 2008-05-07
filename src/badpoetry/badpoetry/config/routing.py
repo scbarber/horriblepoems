@@ -18,6 +18,7 @@ def make_map():
 	
 	# CUSTOM ROUTES HERE
 	map.connect('/', controller='poems', action='index')
+	map.connect('/create', controller='poems', action='create')
 	map.connect('/today', controller='poems', action='today')
 	map.connect('/week', controller='poems', action='week')
 	map.connect('/month', controller='poems', action='month')

@@ -2,7 +2,13 @@
 <%def name="title()">${c.title or 'bad poems are good!'}</%def>
 
 <style type="text/css">DIV#add_poem { display: none; }</style>
-<a href="#" onclick="document.getElementById('add_poem').style.display = 'block'">+ Add a poem</a> 
+<% 
+	from google.appengine.api import users
+	user = users.get_current_user()
+%>
+% if user:
+<a href="#" onclick="document.getElementById('add_poem').style.display = 'block'">+ Add a poem</a>
+% endif
 <%include file="/elements/new_poem.mako" />
 
 % for p in c.poems:

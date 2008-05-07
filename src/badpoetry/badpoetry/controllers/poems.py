@@ -1,5 +1,6 @@
 import logging
 from datetime import datetime, timedelta
+from google.appengine.api import users
 
 from badpoetry.lib.base import *
 
@@ -20,16 +21,16 @@ class PoemsController(BaseController):
 	
 	def week(self):
 		today = datetime.today().date()
-
+		
 		d = today - timedelta(today.isoweekday())
 		back = datetime(d.year, d.month, d.day)
-
+		
 		d = today + timedelta(7 - today.isoweekday())
 		forward = datetime(d.year, d.month, d.day)
 		c.poems = model.Poem.all().filter('created > ', back).filter('created < ', forward)
 		c.title = "this week's poems"
 		return render('/poems/index.mako')
-
+	
 	def month(self):
 		d = datetime.today().date()
 		back = datetime(d.year, d.month, 1)
@@ -37,15 +38,20 @@ class PoemsController(BaseController):
 		c.poems = model.Poem.all().filter('created > ', back).filter('created < ', forward)
 		c.title = "this month's poems"
 		return render('/poems/index.mako')
-
+	
 	def create(self):
-		return render('/poems/create.mako')
+		user = users.get_current_user()
+		if user:
+			return render('/poems/create.mako')
+		else:
+			redirect_to(users.create_login_url('/create'))
 	
 	def add(self):
 		p = model.Poem()
 		p.title = request.POST.get('title')
 		p.content = request.POST.get('content')
 		p.tags = request.POST.get('tags').split(' ')
+		p.author = users.get_current_user()
 		p.put()
 
 		for tag in p.tags:
