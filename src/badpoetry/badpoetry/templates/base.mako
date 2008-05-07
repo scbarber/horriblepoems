@@ -10,7 +10,7 @@
 </head>
 <body>
 	<div id="header"><img src="/images/header.gif"></div>
-	<div id="workingheader">
+	<div id="menu">
 		<div id="tag_selector">
 		<h3>Filter by tag:</h3>
 		${h.link_to('(All tags)', h.url(controller='poems', action='index'))}&nbsp;&nbsp;&nbsp;

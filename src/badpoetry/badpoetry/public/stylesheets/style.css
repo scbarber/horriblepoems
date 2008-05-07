@@ -14,9 +14,9 @@ TR.odd TD { background: #eee; border-top: 1px solid #ddd; border-bottom: 1xp sol
 LABEL { font-weight: bold; display: block; }
 .required LABEL { color: #b22222; }
 
-SPAN.count { font-style: oblique; }
+SPAN.count { font-style: oblique; color: #aaa; }
 
-#workingheader h3 {
+#menu h3 {
 	font-family: Georgia, serif;
 	color: #aaa;
 	display: inline;
@@ -59,18 +59,18 @@ a:hover, a:active
 
 #content { margin: 1em; }
 
-#workingheader
+#menu
 {
     margin: 1em;
 }
 
-#workingheader #order_selector
+#menu #order_selector
 {
     padding: 0.4em 1em;
     background: #ccc;
 }
 
-#workingheader #tag_selector
+#menu #tag_selector
 {
     padding: 0.4em 1em;
     background: #ddd;
@@ -78,13 +78,13 @@ a:hover, a:active
 
 .highlight { color: #aaa; }
 
-#workingheader #date_selector
+#menu #date_selector
 {
     padding: 0.4em 1em;
     background: #bbb;
 }
 
-#workingheader #theme_selector
+#menu #theme_selector
 {
     padding: 0.4em 1em;
     background: #aaa;
@@ -165,10 +165,10 @@ a:hover, a:active
   }
 
 body { background-color: #fafafa; }
-#workingheader #tag_selector { background-color: #ffffe9; }
-#workingheader #order_selector { background-color: #ffffd9; }
-#workingheader #date_selector { background-color: #ffffc9; }
-#workingheader #theme_selector { background-color: #ffffb9; }
+#menu #tag_selector { background-color: #ffffe9; }
+#menu #order_selector { background-color: #ffffd9; }
+#menu #date_selector { background-color: #ffffc9; }
+#menu #theme_selector { background-color: #ffffb9; }
 HR { display: none; }
 .poem { background:#F5F5F5 none repeat scroll 0%; }
 .poem .content { padding-left: 275px; }
