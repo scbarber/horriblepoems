@@ -12,6 +12,10 @@ class PoemsController(BaseController):
 		c.poems = model.Poem.all().order('-created')
 		return render('/poems/index.mako')
 	
+	def show(self, id):
+		c.poems = model.Poem.get(id)
+		return render('/poems/index.mako')
+	
 	def today(self):
 		d = datetime.today().date()
 		today = datetime(d.year, d.month, d.day)

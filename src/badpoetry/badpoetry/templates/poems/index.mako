@@ -14,9 +14,8 @@
 % for p in c.poems:
 <div class="poem">
 	<h3>${p.title}</h3>
-	<hr />
+	<div class="author">by ${p.author.name}</div>
 	<div class="meta">
-		<div class="author"></div>
 		<div class="date">${p.created.strftime("%Y.%m.%d %H:%M")}</div>
 		<div class="tags">
 			% for tag in p.tags:
