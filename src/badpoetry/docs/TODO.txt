@@ -1,0 +1,15 @@
+RSS
+Ratings (-2 -> +2)
+Favorites
+Pagination
+Filter by Author
+List Authors
+
+
+
+:: Ratings ::
+-2 "THAT'S NOT BAD!  THAT'S GOOD POETRY!"
+-1 "Heh.  I enjoyed that one."
+ 0 "Meh."
++1 "Ow.  I hurt."
++2 "MY EYES!  OH MY POOR EYES!"
