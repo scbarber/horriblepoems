@@ -5,9 +5,12 @@ from badpoetry.lib.base import *
 log = logging.getLogger(__name__)
 
 class PoemsController(BaseController):
+	def __init__(self):
+		g.tags = model.Tag().all().order('-count').order('tag').fetch(limit=10)
+	
 	def index(self):
 		#query = db.Query(model.Poem)
-		c.poems = model.Poem.all()
+		c.poems = model.Poem.all().order('-created')
 		return render('/poems/index.mako')
 	
 	def create(self):
@@ -21,11 +24,11 @@ class PoemsController(BaseController):
 		p.put()
 
 		for tag in p.tags:
-			try:
-				t = model.Tag.get(tag)
+			t = model.Tag.all().filter('tag = ', tag).get()
+			if t:
 				t.count = t.count + 1
-			except:
-				t = model.Tag(key_name=tag, count=1)
+			else:
+				t = model.Tag(tag=tag, count=1)
 			t.put()
 			
 		redirect_to('/')

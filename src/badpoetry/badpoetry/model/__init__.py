@@ -8,4 +8,5 @@ class Poem(db.Model):
 	created = db.DateTimeProperty(auto_now_add=True)
 
 class Tag(db.Model):
+	tag = db.StringProperty()
 	count = db.IntegerProperty()

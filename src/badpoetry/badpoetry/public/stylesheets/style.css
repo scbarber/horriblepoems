@@ -14,6 +14,16 @@ TR.odd TD { background: #eee; border-top: 1px solid #ddd; border-bottom: 1xp sol
 LABEL { font-weight: bold; display: block; }
 .required LABEL { color: #b22222; }
 
+SPAN.count { font-style: oblique; }
+
+#workingheader h3 {
+	font-family: Georgia, serif;
+	color: #aaa;
+	display: inline;
+	font-size: 1em;
+}
+
+
 /* Import from seth.css from original bad poetry */
 body
 {
@@ -52,12 +62,6 @@ a:hover, a:active
 #workingheader
 {
     margin: 1em;
-}
-
-#workingheader label
-{
-    font-family: Georgia, serif;
-    color: #aaa;
 }
 
 #workingheader #order_selector
