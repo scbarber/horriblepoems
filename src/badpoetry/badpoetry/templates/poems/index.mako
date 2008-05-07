@@ -21,7 +21,10 @@
 		<div class="permalink">
 			${h.link_to('(permalink)', h.url(action="show", id=p.key()))}
 			% if c.user == p.author:
-			| ${h.link_to('edit', h.url(action="edit", id=p.key()))}
+			<p style="text-align: center">
+			${h.link_to('edit', h.url(action="edit", id=p.key()))}
+			| ${h.link_to('delete', h.url(action="delete", id=p.key()), confirm="Are you sure?")}
+			</p>
 			% endif
 		</div>
 	</div>

@@ -68,7 +68,7 @@ class PoemsController(BaseController):
 		p = model.Poem()
 		p.title = request.POST.get('title')
 		p.content = request.POST.get('content')
-		p.tags = request.POST.get('tags').split(' ')
+		p.tags = request.POST.get('tags').strip().split(' ')
 		p.author = self.user
 		p.put()
 
@@ -93,7 +93,7 @@ class PoemsController(BaseController):
 		poem.content = self.form_result.get('content')
 
 		# The following two loops will find all changed tags and account for them
-		tags = request.POST.get('tags').split(' ')
+		tags = request.POST.get('tags').strip().split(' ')
 		for t in poem.tags:
 			if not t in tags:
 				tag = model.Tag.all().filter('tag = ', t).get()
@@ -112,8 +112,23 @@ class PoemsController(BaseController):
 			else:
 				t = model.Tag(tag=tag, count=1)
 			t.put()
-		poem.tags = request.POST.get('tags').split(' ')
+		poem.tags = request.POST.get('tags').strip().split(' ')
 		poem.put()
 		redirect_to(h.url_for(action="show", id=poem.key()))
 	
+	def delete(self, id):
+		poem = model.Poem.get(id)
+		if self.user != poem.author:
+			session['flash'] = "You can only delete your own poems."
+			session.save()
+			send_back()
+		for t in poem.tags:
+			tag = model.Tag.all().filter('tag = ', t).get()
+			tag.count = tag.count - 1
+			if tag.count == 0:
+				tag.delete()
+			else:
+				tag.put()
+		poem.delete()
+		redirect_to("/")
 	
