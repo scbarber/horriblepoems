@@ -1,4 +1,13 @@
 <%def name="title()"></%def>
+<%def name="flash()">
+	% if session.has_key('flash'):
+		<div class="flash">${session['flash']}</div>
+		<%
+			del session['flash']
+		 	session.save()
+		%>
+	% endif
+</%def>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
 
@@ -11,6 +20,7 @@
 <body>
 	<div id="header"><img src="/images/header.gif"></div>
 	<div id="menu">
+		${self.flash()}
 		<div style="text-align: right">
 		<% 
 			from google.appengine.api import users
@@ -25,7 +35,7 @@
 		
 		<div id="tag_selector">
 			<h3>Filter by tag:</h3>
-			${h.link_to('(All tags)', h.url(controller='poems', action='index'))}&nbsp;&nbsp;&nbsp;
+			<a href="/">(All tags)</a>&nbsp;&nbsp;&nbsp;
 			% for tag in g.tags:
 				${h.link_to(tag.tag, h.url(controller='tags', action='show', id=tag.tag))} <span class="count">(${tag.count})</span>
 			% endfor

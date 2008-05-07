@@ -14,11 +14,16 @@ from google.appengine.api import users
 import badpoetry.lib.helpers as h
 import badpoetry.model as model
 
+def send_back(url="/"):
+	if request.headers.has_key('Referer'):
+		url = request.headers['Referer']
+	redirect_to(url)
+
 class BaseController(WSGIController):
 	def __init__(self):
 		g.tags = model.Tag().all().order('-count').order('tag').fetch(limit=10)
 		self.user = users.get_current_user()
-	
+		c.user = self.user
 	
 	def __call__(self, environ, start_response):
 		"""Invoke the Controller"""

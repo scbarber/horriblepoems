@@ -8,12 +8,13 @@ log = logging.getLogger(__name__)
 
 class PoemsController(BaseController):
 	def index(self):
-		#query = db.Query(model.Poem)
 		c.poems = model.Poem.all().order('-created')
 		return render('/poems/index.mako')
 	
 	def show(self, id):
-		c.poems = model.Poem.get(id)
+		poem = model.Poem.get(id)
+		c.title = poem.title
+		c.poems = [poem] # This is a hack to make c.poems iterable so I don't have to change the template
 		return render('/poems/index.mako')
 	
 	def today(self):
@@ -49,6 +50,17 @@ class PoemsController(BaseController):
 		else:
 			redirect_to(users.create_login_url('/create'))
 	
+	def edit(self, id):
+		poem = model.Poem.get(id)
+		if self.user != poem.author:
+			session['flash'] = "You can only edit your own poems."
+			session.save()
+			send_back()
+		c.poem = poem
+		c.title = poem.title
+		return render('/poems/edit.mako')
+	
+	@validate(schema=model.PoemForm(), form='create')
 	def add(self):
 		if self.user == None:
 			redirect_to(users.create_login_url('/create'))
@@ -69,4 +81,39 @@ class PoemsController(BaseController):
 			t.put()
 			
 		redirect_to('/')
+	
+ 	@validate(schema=model.PoemForm(), form='edit')
+	def update(self, id):
+		poem = model.Poem.get(id)
+		if self.user != poem.author:
+			session['flash'] = "You can only edit your own poems."
+			session.save()
+			send_back()
+		poem.title = self.form_result.get('title')
+		poem.content = self.form_result.get('content')
+
+		# The following two loops will find all changed tags and account for them
+		tags = request.POST.get('tags').split(' ')
+		for t in poem.tags:
+			if not t in tags:
+				tag = model.Tag.all().filter('tag = ', t).get()
+				tag.count = tag.count - 1
+				if tag.count == 0:
+					tag.delete()
+				else:
+					tag.put()
+			else:
+				tags.remove(t)
+
+		for tag in tags:
+			t = model.Tag.all().filter('tag = ', tag).get()
+			if t:
+				t.count = t.count + 1
+			else:
+				t = model.Tag(tag=tag, count=1)
+			t.put()
+		poem.tags = request.POST.get('tags').split(' ')
+		poem.put()
+		redirect_to(h.url_for(action="show", id=poem.key()))
+	
 	

@@ -14,3 +14,11 @@ class Poem(db.Model):
 class Tag(db.Model):
 	tag = db.StringProperty(unicode)
 	count = db.IntegerProperty()
+
+import formencode
+
+class PoemForm(formencode.Schema):
+	allow_extra_fields = True
+	filter_extra_fields = True
+	title = formencode.validators.UnicodeString(not_empty=True)
+	content = formencode.validators.UnicodeString(not_empty=True)
