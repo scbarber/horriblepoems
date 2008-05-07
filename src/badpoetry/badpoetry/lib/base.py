@@ -9,6 +9,7 @@ from pylons.controllers.util import abort, etag_cache, redirect_to
 from pylons.decorators import jsonify, validate
 from pylons.i18n import _, ungettext, N_
 from pylons.templating import render
+from google.appengine.api import users
 
 import badpoetry.lib.helpers as h
 import badpoetry.model as model
@@ -16,6 +17,8 @@ import badpoetry.model as model
 class BaseController(WSGIController):
 	def __init__(self):
 		g.tags = model.Tag().all().order('-count').order('tag').fetch(limit=10)
+		self.user = users.get_current_user()
+	
 	
 	def __call__(self, environ, start_response):
 		"""Invoke the Controller"""

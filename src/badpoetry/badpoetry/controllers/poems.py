@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime, timedelta
-from google.appengine.api import users
+#from google.appengine.api import users
 
 from badpoetry.lib.base import *
 
@@ -40,18 +40,20 @@ class PoemsController(BaseController):
 		return render('/poems/index.mako')
 	
 	def create(self):
-		user = users.get_current_user()
-		if user:
+		if self.user:
 			return render('/poems/create.mako')
 		else:
 			redirect_to(users.create_login_url('/create'))
 	
 	def add(self):
+		if self.user == None:
+			redirect_to(users.create_login_url('/create'))
+			return None
 		p = model.Poem()
 		p.title = request.POST.get('title')
 		p.content = request.POST.get('content')
 		p.tags = request.POST.get('tags').split(' ')
-		p.author = users.get_current_user()
+		p.author = self.user
 		p.put()
 
 		for tag in p.tags:
