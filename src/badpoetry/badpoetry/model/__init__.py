@@ -6,3 +6,6 @@ class Poem(db.Model):
 	content = db.TextProperty()
 	tags = db.ListProperty(unicode)
 	created = db.DateTimeProperty(auto_now_add=True)
+
+class Tag(db.Model):
+	count = db.IntegerProperty()

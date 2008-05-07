@@ -19,5 +19,14 @@ class PoemsController(BaseController):
 		p.content = request.POST.get('content')
 		p.tags = request.POST.get('tags').split(' ')
 		p.put()
+
+		for tag in p.tags:
+			try:
+				t = model.Tag.get(tag)
+				t.count = t.count + 1
+			except:
+				t = model.Tag(key_name=tag, count=1)
+			t.put()
+			
 		redirect_to('/')
 	
