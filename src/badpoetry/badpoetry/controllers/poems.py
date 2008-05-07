@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime, timedelta
 
 from badpoetry.lib.base import *
 
@@ -13,6 +14,33 @@ class PoemsController(BaseController):
 		c.poems = model.Poem.all().order('-created')
 		return render('/poems/index.mako')
 	
+	def today(self):
+		d = datetime.today().date()
+		today = datetime(d.year, d.month, d.day)
+		c.poems = model.Poem.all().filter('created > ', today)
+		c.title = "today's poems"
+		return render('/poems/index.mako')
+	
+	def week(self):
+		today = datetime.today().date()
+
+		d = today - timedelta(today.isoweekday())
+		back = datetime(d.year, d.month, d.day)
+
+		d = today + timedelta(7 - today.isoweekday())
+		forward = datetime(d.year, d.month, d.day)
+		c.poems = model.Poem.all().filter('created > ', back).filter('created < ', forward)
+		c.title = "this week's poems"
+		return render('/poems/index.mako')
+
+	def month(self):
+		d = datetime.today().date()
+		back = datetime(d.year, d.month, 1)
+		forward = datetime(d.year, d.month+1, 1)
+		c.poems = model.Poem.all().filter('created > ', back).filter('created < ', forward)
+		c.title = "this month's poems"
+		return render('/poems/index.mako')
+
 	def create(self):
 		return render('/poems/create.mako')
 	

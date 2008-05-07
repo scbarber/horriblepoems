@@ -18,6 +18,15 @@
 			${h.link_to(tag.tag, h.url(controller='tags', action='show', id=tag.tag))} <span class="count">(${tag.count})</span>
 		% endfor
 		</div>
+
+		<div id="date_selector">
+			<h3>Filter by date:</h3>
+			<a href="/">(Any date)</a>
+			<a href="/today">Today's Poems</a>
+			<a href="/week">This Week's Poems</a>
+			<a href="/month">This Month's Poems</a>
+		</div>
+
 	</div>
 
 	${next.body()}
