@@ -21,7 +21,7 @@ def send_back(url="/"):
 
 class BaseController(WSGIController):
 	def __init__(self):
-		g.tags = model.Tag().all().order('-count').order('tag').fetch(limit=10)
+		g.tags = model.Tags().all().order('-count').order('tag').fetch(limit=10)
 		self.user = users.get_current_user()
 		c.user = self.user
 	

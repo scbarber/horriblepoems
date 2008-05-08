@@ -33,6 +33,18 @@ SPAN.count { font-style: oblique; color: #aaa; }
 DIV.flash { color: green; }
 .error-message { color: #b22222; font-weight: bold; background-color: #FFDDE4; padding: 2px 5px; }
 
+DIV#add {
+	margin: 1em 1em 2em 1em;
+	padding: 1em 0em;
+}
+A.add {
+	border: 1px solid #ddd;
+	padding: 1em;
+	background-color: #F5F5F5;
+}
+
+DIV.pager { text-align: center; }
+
 /* Import from seth.css from original bad poetry */
 body {
 	font-family: Helvetica, Verdana, Sans-Serif;
@@ -107,24 +119,24 @@ a:hover, a:active {
 
 .clearall { clear: both; }
 
-.pagination {
+.pager {
 	font-family: Helvetica, Verdana, Sans-Serif;
 	font-size: 0.7em;
 	padding: 3px;
 	margin: 0.4em 1em;
 }
-.pagination a {
+.pager a {
 	padding: 2px 5px 2px 5px;
 	margin: 2px;
 	border: 1px solid #ddd;
 	text-decoration: none;
 	color: #999;
 }
-.pagination a:hover, .pagination a:active {
+.pager a:hover, .pager a:active {
 	border: 1px solid #999;
 	color: #000;
 }
-.pagination span.current {
+.pager span.pager_curpage {
 	padding: 2px 5px 2px 5px;
 	margin: 2px;
 	border: 1px solid #999;
@@ -132,7 +144,7 @@ a:hover, a:active {
 	background-color: #999;
 	color: #FFF;
 }
-.pagination span.disabled {
+.pager span.disabled {
 	padding: 2px 5px 2px 5px;
 	margin: 2px;
 	border: 1px solid #eee;
@@ -164,5 +176,5 @@ body { background-color: #fafafa; }
 	margin-top: -30px;
 }
 .meta A {	text-decoration: underline; }
-.pagination a { border: 1px solid #0078D3; }
-.pagination span.current { border: 1px solid #0078D3; }
+.pager a { border: 1px solid #0078D3; }
+.pager span.current { border: 1px solid #0078D3; }

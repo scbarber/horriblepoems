@@ -1,5 +1,5 @@
 import logging
-
+import paginate
 from badpoetry.lib.base import *
 
 log = logging.getLogger(__name__)
@@ -10,7 +10,9 @@ class TagsController(BaseController):
 		return render('/tags/index.mako')
 	
 	def show(self, id):
-		#query = db.Query(model.Poem)
-		c.poems = model.Poems.all().filter("tags = ", id)
+		poems = model.Poems.all().filter("tags = ", id)
+		page = request.GET.get('page_nr') or 1
+		c.poems = paginate.Page([poem for poem in poems], items_per_page=10, current_page=page)
+		c.title = "poems tagged with '%s'" % (id)
 		return render('/poems/index.mako')
 	

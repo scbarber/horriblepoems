@@ -15,8 +15,11 @@ class Tags(db.Model):
 	tag = db.StringProperty(unicode)
 	count = db.IntegerProperty()
 
-class Authors(db.Model):
-	pass
+class UserMetadata(db.Expando):
+	user = db.UserProperty()
+	poem_count = db.IntegerProperty()
+	favourites = db.ListProperty(db.Key)
+	poems_rated = db.ListProperty(db.Key)
 
 # Validation Schtuff
 import formencode

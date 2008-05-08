@@ -1,0 +1,70 @@
+Metadata-Version: 1.0
+Name: paginate
+Version: 0.3.2
+Summary: Divides large result sets into pages for easier browsing
+Home-page: http://paginate.workaround.org/
+Author: Christoph Haas
+Author-email: email@christoph-haas.de
+License: MIT
+Description: 
+        paginate moduel
+        +++++++++++++++++++++
+        
+        .. contents ::
+        
+        Author
+        ======
+        
+        * `Christoph Haas <email@christoph-haas.de>`_
+        * Homepage and demos: `paginate.workaround.org <http://paginate.workaround.org>`_
+        
+        Summary
+        =======
+        
+        * This module helps dividing large result sets into pages for easier browsing.
+        The user gets displayed one page at a time and can navigate to other pages.
+        * Especially useful with the `Pylons <http://pylonshq.com>`_ web framework
+        * Documentation and live examples available at
+        `paginate.workaround.org <http://paginate.workaround.org>`_
+        * It is intended to add this module as part of the
+        `Webhelpers <http://pypi.python.org/pypi/WebHelpers>`_ module in the near future
+        
+        Download and install with EasyInstall
+        =====================================
+        
+        * Download http://peak.telecommunity.com/dist/ez_setup.py if you don't have it yet
+        * run: ``easy_install paginate``
+        
+        Documentation
+        =============
+        
+        The module contains extensive documentation and examples in the docs/ directory.
+        
+        
+        License
+        =======
+        Copyright (c) 2007 Christoph Haas <email@christoph-haas.de>
+        
+        Permission is hereby granted, free of charge, to any person obtaining a copy
+        of this software and associated documentation files (the "Software"), to deal
+        in the Software without restriction, including without limitation the rights
+        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+        copies of the Software, and to permit persons to whom the Software is
+        furnished to do so, subject to the following conditions:
+        
+        The above copyright notice and this permission notice shall be included in
+        all copies or substantial portions of the Software.
+        
+        THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+        THE SOFTWARE.
+        
+        
+        Download
+        ========
+        
+Platform: UNKNOWN

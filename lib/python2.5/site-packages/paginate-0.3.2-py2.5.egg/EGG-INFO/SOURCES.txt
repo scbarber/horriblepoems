@@ -1,0 +1,15 @@
+LICENSE.txt
+MANIFEST.in
+README.txt
+setup.cfg
+setup.py
+docs/index.txt
+docs/main.txt
+paginate/__init__.py
+paginate.egg-info/PKG-INFO
+paginate.egg-info/SOURCES.txt
+paginate.egg-info/dependency_links.txt
+paginate.egg-info/entry_points.txt
+paginate.egg-info/not-zip-safe
+paginate.egg-info/requires.txt
+paginate.egg-info/top_level.txt

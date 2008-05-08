@@ -1,7 +1,6 @@
 RSS
 Ratings (-2 -> +2)
 Favorites
-Pagination
 Filter by Author
 List Authors
 

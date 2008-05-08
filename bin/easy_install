@@ -1,4 +1,4 @@
-#!/Users/sethb/Development/AppEngine/badpoetry/bin/python
+#!/Users/seth/Development/badpoetry/bin/python
 # EASY-INSTALL-ENTRY-SCRIPT: 'setuptools==0.6c7','console_scripts','easy_install'
 __requires__ = 'setuptools==0.6c7'
 import sys

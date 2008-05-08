@@ -1,11 +1,20 @@
 <%inherit file="${context.get('c').layout or context.get('g').layout}"/>
 <%def name="title()">${c.title or 'bad poems are good!'}</%def>
+<%def name="pager()">
+% if hasattr(c.poems, 'pager'):
+<div class="pager">
+	${c.poems.pager('~2~')}
+</div>
+%endif
+</%def>
 
 <style type="text/css">DIV#add_poem { display: none; }</style>
 % if c.user:
-<a href="#" onclick="document.getElementById('add_poem').style.display = 'block'">+ Add a poem</a>
+<div id="add"><a href="#" class="add" onclick="document.getElementById('add_poem').style.display = 'block'">+ Add a poem</a></div>
 % endif
 <%include file="/elements/new_poem.mako" />
+
+${pager()}
 
 % for p in c.poems:
 <div class="poem">
@@ -34,3 +43,5 @@
 	<div class="clearall"></div>
 </div>
 % endfor
+
+${pager()}

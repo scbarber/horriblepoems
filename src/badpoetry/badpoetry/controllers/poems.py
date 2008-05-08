@@ -1,28 +1,32 @@
 import logging
 from datetime import datetime, timedelta
+import paginate
 
 from google.appengine.api import users
-#from google.appengine.ext import db
 
 from badpoetry.lib.base import *
 
 log = logging.getLogger(__name__)
 
+def page_this(poems):
+	page = request.GET.get('page_nr') or 1
+	return(paginate.Page([poem for poem in poems], items_per_page=10, current_page=page))
+
 class PoemsController(BaseController):
 	def index(self):
-		c.poems = model.Poems.all().order('-created')
+		c.poems = page_this(model.Poems.all().order('-created'))
 		return render('/poems/index.mako')
 	
 	def show(self, id):
 		poem = model.Poems.get(id)
-		c.title = Poems.title
+		c.title = poem.title
 		c.poems = [poem] # This is a hack to make c.poems iterable so I don't have to change the template
 		return render('/poems/index.mako')
 	
 	def today(self):
 		d = datetime.today().date()
 		today = datetime(d.year, d.month, d.day)
-		c.poems = model.Poems.all().filter('created > ', today)
+		c.poems = page_this(model.Poems.all().filter('created > ', today))
 		c.title = "today's poems"
 		return render('/poems/index.mako')
 	
@@ -34,7 +38,7 @@ class PoemsController(BaseController):
 		
 		d = today + timedelta(7 - today.isoweekday())
 		forward = datetime(d.year, d.month, d.day)
-		c.poems = model.Poems.all().filter('created > ', back).filter('created < ', forward)
+		c.poems = page_this(model.Poems.all().filter('created > ', back).filter('created < ', forward))
 		c.title = "this week's poems"
 		return render('/poems/index.mako')
 	
@@ -42,7 +46,7 @@ class PoemsController(BaseController):
 		d = datetime.today().date()
 		back = datetime(d.year, d.month, 1)
 		forward = datetime(d.year, d.month+1, 1)
-		c.poems = model.Poems.all().filter('created > ', back).filter('created < ', forward)
+		c.poems = page_this(model.Poems.all().filter('created > ', back).filter('created < ', forward))
 		c.title = "this month's poems"
 		return render('/poems/index.mako')
 	
@@ -67,7 +71,7 @@ class PoemsController(BaseController):
 		if self.user == None:
 			redirect_to(users.create_login_url('/create'))
 			return None
-		p = model.Poem()
+		p = model.Poems()
 		p.title = request.POST.get('title')
 		p.content = request.POST.get('content')
 		p.tags = request.POST.get('tags').strip().split(' ')
@@ -79,7 +83,7 @@ class PoemsController(BaseController):
 			if t:
 				t.count = t.count + 1
 			else:
-				t = model.Tag(tag=tag, count=1)
+				t = model.Tags(tag=tag, count=1)
 			t.put()
 			
 		redirect_to('/')
@@ -112,7 +116,7 @@ class PoemsController(BaseController):
 			if t:
 				t.count = t.count + 1
 			else:
-				t = model.Tag(tag=tag, count=1)
+				t = model.Tags(tag=tag, count=1)
 			t.put()
 		Poems.tags = request.POST.get('tags').strip().split(' ')
 		Poems.put()
@@ -135,6 +139,6 @@ class PoemsController(BaseController):
 		redirect_to("/")
 	
 	def author(self, id):
-		c.poems = model.Poems.all().filter('author = ', users.User(id)).order('-created')
+		c.poems = page_this(model.Poems.all().filter('author = ', users.User(id)).order('-created'))
 		return render('/poems/index.mako')
 	
