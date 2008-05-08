@@ -1,6 +1,6 @@
 from google.appengine.ext import db
 
-class Poem(db.Model):
+class Poems(db.Model):
 	author = db.UserProperty()
 	title = db.StringProperty(unicode)
 	content = db.TextProperty(unicode)
@@ -11,10 +11,14 @@ class Poem(db.Model):
 	favorited = db.IntegerProperty() # 3 (3 people marked this as a favourite)
 	created = db.DateTimeProperty(auto_now_add=True)
 
-class Tag(db.Model):
+class Tags(db.Model):
 	tag = db.StringProperty(unicode)
 	count = db.IntegerProperty()
 
+class Authors(db.Model):
+	pass
+
+# Validation Schtuff
 import formencode
 
 class PoemForm(formencode.Schema):

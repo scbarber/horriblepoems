@@ -10,19 +10,19 @@ log = logging.getLogger(__name__)
 
 class PoemsController(BaseController):
 	def index(self):
-		c.poems = model.Poem.all().order('-created')
+		c.poems = model.Poems.all().order('-created')
 		return render('/poems/index.mako')
 	
 	def show(self, id):
-		poem = model.Poem.get(id)
-		c.title = poem.title
+		poem = model.Poems.get(id)
+		c.title = Poems.title
 		c.poems = [poem] # This is a hack to make c.poems iterable so I don't have to change the template
 		return render('/poems/index.mako')
 	
 	def today(self):
 		d = datetime.today().date()
 		today = datetime(d.year, d.month, d.day)
-		c.poems = model.Poem.all().filter('created > ', today)
+		c.poems = model.Poems.all().filter('created > ', today)
 		c.title = "today's poems"
 		return render('/poems/index.mako')
 	
@@ -34,7 +34,7 @@ class PoemsController(BaseController):
 		
 		d = today + timedelta(7 - today.isoweekday())
 		forward = datetime(d.year, d.month, d.day)
-		c.poems = model.Poem.all().filter('created > ', back).filter('created < ', forward)
+		c.poems = model.Poems.all().filter('created > ', back).filter('created < ', forward)
 		c.title = "this week's poems"
 		return render('/poems/index.mako')
 	
@@ -42,7 +42,7 @@ class PoemsController(BaseController):
 		d = datetime.today().date()
 		back = datetime(d.year, d.month, 1)
 		forward = datetime(d.year, d.month+1, 1)
-		c.poems = model.Poem.all().filter('created > ', back).filter('created < ', forward)
+		c.poems = model.Poems.all().filter('created > ', back).filter('created < ', forward)
 		c.title = "this month's poems"
 		return render('/poems/index.mako')
 	
@@ -53,13 +53,13 @@ class PoemsController(BaseController):
 			redirect_to(users.create_login_url('/create'))
 	
 	def edit(self, id):
-		poem = model.Poem.get(id)
-		if self.user != poem.author:
+		poem = model.Poems.get(id)
+		if self.user != Poems.author:
 			session['flash'] = "You can only edit your own poems."
 			session.save()
 			send_back()
 		c.poem = poem
-		c.title = poem.title
+		c.title = Poems.title
 		return render('/poems/edit.mako')
 	
 	@validate(schema=model.PoemForm(), form='create')
@@ -75,7 +75,7 @@ class PoemsController(BaseController):
 		p.put()
 		
 		for tag in p.tags:
-			t = model.Tag.all().filter('tag = ', tag).get()
+			t = model.Tags.all().filter('tag = ', tag).get()
 			if t:
 				t.count = t.count + 1
 			else:
@@ -86,55 +86,55 @@ class PoemsController(BaseController):
 	
  	@validate(schema=model.PoemForm(), form='edit')
 	def update(self, id):
-		poem = model.Poem.get(id)
-		if self.user != poem.author:
+		poem = model.Poems.get(id)
+		if self.user != Poems.author:
 			session['flash'] = "You can only edit your own poems."
 			session.save()
 			send_back()
-		poem.title = self.form_result.get('title')
-		poem.content = self.form_result.get('content')
+		Poems.title = self.form_result.get('title')
+		Poems.content = self.form_result.get('content')
 
 		# The following two loops will find all changed tags and account for them
 		tags = request.POST.get('tags').strip().split(' ')
-		for t in poem.tags:
+		for t in Poems.tags:
 			if not t in tags:
-				tag = model.Tag.all().filter('tag = ', t).get()
-				tag.count = tag.count - 1
-				if tag.count == 0:
-					tag.delete()
+				tag = model.Tags.all().filter('tag = ', t).get()
+				Tags.count = Tags.count - 1
+				if Tags.count == 0:
+					Tags.delete()
 				else:
-					tag.put()
+					Tags.put()
 			else:
 				tags.remove(t)
 
 		for tag in tags:
-			t = model.Tag.all().filter('tag = ', tag).get()
+			t = model.Tags.all().filter('tag = ', tag).get()
 			if t:
 				t.count = t.count + 1
 			else:
 				t = model.Tag(tag=tag, count=1)
 			t.put()
-		poem.tags = request.POST.get('tags').strip().split(' ')
-		poem.put()
-		redirect_to(h.url_for(action="show", id=poem.key()))
+		Poems.tags = request.POST.get('tags').strip().split(' ')
+		Poems.put()
+		redirect_to(h.url_for(action="show", id=Poems.key()))
 	
 	def delete(self, id):
-		poem = model.Poem.get(id)
-		if self.user != poem.author:
+		poem = model.Poems.get(id)
+		if self.user != Poems.author:
 			session['flash'] = "You can only delete your own poems."
 			session.save()
 			send_back()
-		for t in poem.tags:
-			tag = model.Tag.all().filter('tag = ', t).get()
-			tag.count = tag.count - 1
-			if tag.count == 0:
-				tag.delete()
+		for t in Poems.tags:
+			tag = model.Tags.all().filter('tag = ', t).get()
+			Tags.count = Tags.count - 1
+			if Tags.count == 0:
+				Tags.delete()
 			else:
-				tag.put()
-		poem.delete()
+				Tags.put()
+		Poems.delete()
 		redirect_to("/")
 	
 	def author(self, id):
-		c.poems = model.Poem.all().filter('author = ', users.User(id)).order('-created')
+		c.poems = model.Poems.all().filter('author = ', users.User(id)).order('-created')
 		return render('/poems/index.mako')
 	
