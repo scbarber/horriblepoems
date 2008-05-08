@@ -1,9 +1,10 @@
 RSS
-Ratings (-2 -> +2)
-Favorites
+AJAX auto-complete for tags
+Bulk Uploader (Import from current RoR incarnation)
 Filter by Author
 List Authors
-
+Ratings (-2 -> +2)
+Favorites
 
 
 :: Ratings ::
