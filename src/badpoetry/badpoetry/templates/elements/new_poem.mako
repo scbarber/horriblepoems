@@ -10,6 +10,7 @@
 	</div>
 	<div class="optional">
 		<label for="tags">Tags</label>
+		<em>(separated by commas)</em>
 		${h.text_field('tags')}
 	</div>
 	<div class="submit">${h.submit('Add some bad poetry')}</div>

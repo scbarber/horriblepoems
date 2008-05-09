@@ -74,7 +74,7 @@ class PoemsController(BaseController):
 		p = model.Poems()
 		p.title = request.POST.get('title')
 		p.content = request.POST.get('content')
-		p.tags = request.POST.get('tags').strip().split(' ')
+		p.tags = [tag.strip() for tag in request.POST.get('tags').lower().split(',')]
 		p.author = self.user
 		p.put()
 		
@@ -103,9 +103,9 @@ class PoemsController(BaseController):
 			send_back()
 		poem.title = self.form_result.get('title')
 		poem.content = self.form_result.get('content')
-
+		
 		# The following two loops will find all changed tags and account for them
-		tags = request.POST.get('tags').strip().split(' ')
+		tags = [tag.strip() for tag in request.POST.get('tags').lower().split(',')]
 		for t in poem.tags:
 			if not t in tags:
 				tag = model.Tags.all().filter('tag = ', t).get()
@@ -124,7 +124,7 @@ class PoemsController(BaseController):
 			else:
 				t = model.Tags(tag=tag, count=1)
 			t.put()
-		poem.tags = request.POST.get('tags').strip().split(' ')
+		poem.tags = [tag.strip() for tag in request.POST.get('tags').lower().split(',')]
 		poem.put()
 		redirect_to(h.url_for(action="show", id=Poems.key()))
 	
@@ -159,7 +159,7 @@ class PoemsController(BaseController):
 		else:
 			c.poems = page_this(model.Poems.all().filter('author = ', self.user).order('-created'))
 			return render('/poems/index.mako')
-
+	
 	def rss(self):
 		d = datetime.today().date() - timedelta(3) # Last 3 days worth of poems.
 		date = datetime(d.year, d.month, d.day)
