@@ -142,3 +142,10 @@ class PoemsController(BaseController):
 		c.poems = page_this(model.Poems.all().filter('author = ', users.User(id)).order('-created'))
 		return render('/poems/index.mako')
 	
+	def rss(self):
+		d = datetime.today().date() - timedelta(3) # Last 3 days worth of poems.
+		date = datetime(d.year, d.month, d.day)
+		c.poems = page_this(model.Poems.all().filter('created > ', date))
+		# header('Content-type: application/rss+xml');
+		return render('/rss2.mako')
+	
