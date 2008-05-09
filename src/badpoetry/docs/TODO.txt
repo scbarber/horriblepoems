@@ -1,4 +1,3 @@
-RSS
 AJAX auto-complete for tags
 Bulk Uploader (Import from current RoR incarnation)
 Filter by Author

@@ -16,6 +16,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Bad Poetry | ${self.title()}</title>
   ${h.stylesheet_link_tag('style.css')}
+	${h.auto_discovery_link_tag("http://%s/rss" % (request.host))}
 </head>
 <body>
 	<div id="header"><img src="/images/header.gif"></div>

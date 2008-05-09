@@ -16,7 +16,7 @@
 			<description><![CDATA[${h.simple_format(p.content)}]]></description>
 			<dc:creator>${p.author.nickname()}</dc:creator>
 			<dc:subject>${' '.join(p.tags)}</dc:subject>
-			<pubDate>${p.created.strftime("%a, %d %b %Y %H:%M:%S +0000")}</pubDate>
+			<pubDate>${p.created.strftime("%a, %d %b %Y %H:%M:%S")}</pubDate>
 			<guid>${request.scheme}://${request.host}${h.url_for(controller="poems", action="show", id=p.key())}</guid>
 		</item>
 % endfor
