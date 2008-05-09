@@ -2,6 +2,7 @@ import logging
 from datetime import datetime, timedelta
 import paginate
 
+from google.appengine.ext import db
 from google.appengine.api import users
 
 from badpoetry.lib.base import *
@@ -58,7 +59,7 @@ class PoemsController(BaseController):
 	
 	def edit(self, id):
 		poem = model.Poems.get(id)
-		if self.user != Poems.author:
+		if self.user != poem.author:
 			session['flash'] = "You can only edit your own poems."
 			session.save()
 			send_back()
@@ -74,7 +75,7 @@ class PoemsController(BaseController):
 		p = model.Poems()
 		p.title = request.POST.get('title')
 		p.content = request.POST.get('content')
-		p.tags = [tag.strip() for tag in request.POST.get('tags').lower().split(',')]
+		p.tags = [db.Category(tag.strip()) for tag in request.POST.get('tags').lower().split(',')]
 		p.author = self.user
 		p.put()
 		
@@ -97,7 +98,7 @@ class PoemsController(BaseController):
  	@validate(schema=model.PoemForm(), form='edit')
 	def update(self, id):
 		poem = model.Poems.get(id)
-		if self.user != Poems.author:
+		if self.user != poem.author:
 			session['flash'] = "You can only edit your own poems."
 			session.save()
 			send_back()
@@ -124,17 +125,17 @@ class PoemsController(BaseController):
 			else:
 				t = model.Tags(tag=tag, count=1)
 			t.put()
-		poem.tags = [tag.strip() for tag in request.POST.get('tags').lower().split(',')]
+		poem.tags = [db.Category(tag.strip()) for tag in request.POST.get('tags').lower().split(',')]
 		poem.put()
-		redirect_to(h.url_for(action="show", id=Poems.key()))
+		redirect_to(h.url_for(action="show", id=poem.key()))
 	
 	def delete(self, id):
 		poem = model.Poems.get(id)
-		if self.user != Poems.author:
+		if self.user != poem.author:
 			session['flash'] = "You can only delete your own poems."
 			session.save()
 			send_back()
-		for t in Poems.tags:
+		for t in poem.tags:
 			tag = model.Tags.all().filter('tag = ', t).get()
 			Tags.count = Tags.count - 1
 			if Tags.count == 0:

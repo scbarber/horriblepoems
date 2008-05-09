@@ -3,9 +3,9 @@ from google.appengine.api import users
 
 class Poems(db.Model):
 	author = db.UserProperty()
-	title = db.StringProperty(unicode, required=True)
-	content = db.TextProperty(unicode, required=True)
-	tags = db.ListProperty(unicode)
+	title = db.StringProperty(unicode)
+	content = db.TextProperty(unicode)
+	tags = db.ListProperty(db.Category)
 	score = db.IntegerProperty()
 	number_of_ratings = db.IntegerProperty(default=0)
 	favourites = db.ListProperty(users.User)

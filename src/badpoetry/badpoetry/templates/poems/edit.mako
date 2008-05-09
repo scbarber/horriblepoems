@@ -14,7 +14,7 @@
 	</div>
 	<div class="optional">
 		<label for="tags">Tags</label>
-		${h.text_field('tags', " ".join(c.poem.tags))}
+		${h.text_field('tags', ", ".join(c.poem.tags))}
 	</div>
 	<div class="submit">${h.submit('Update')}</div>
 	${h.end_form()}
