@@ -63,7 +63,7 @@ class PoemsController(BaseController):
 			session.save()
 			send_back()
 		c.poem = poem
-		c.title = Poems.title
+		c.title = poem.title
 		return render('/poems/edit.mako')
 	
 	@validate(schema=model.PoemForm(), form='create')
@@ -85,7 +85,13 @@ class PoemsController(BaseController):
 			else:
 				t = model.Tags(tag=tag, count=1)
 			t.put()
-			
+		
+		userMeta = model.UserMetadata.all().filter('user = ', self.user).get()
+		if userMeta:
+			userMeta.poem_count += 1
+		else:
+			userMeta = model.UserMetadata(user=self.user, poem_count=1)
+		userMeta.put()
 		redirect_to('/')
 	
  	@validate(schema=model.PoemForm(), form='edit')
@@ -95,12 +101,12 @@ class PoemsController(BaseController):
 			session['flash'] = "You can only edit your own poems."
 			session.save()
 			send_back()
-		Poems.title = self.form_result.get('title')
-		Poems.content = self.form_result.get('content')
+		poem.title = self.form_result.get('title')
+		poem.content = self.form_result.get('content')
 
 		# The following two loops will find all changed tags and account for them
 		tags = request.POST.get('tags').strip().split(' ')
-		for t in Poems.tags:
+		for t in poem.tags:
 			if not t in tags:
 				tag = model.Tags.all().filter('tag = ', t).get()
 				Tags.count = Tags.count - 1
@@ -118,8 +124,8 @@ class PoemsController(BaseController):
 			else:
 				t = model.Tags(tag=tag, count=1)
 			t.put()
-		Poems.tags = request.POST.get('tags').strip().split(' ')
-		Poems.put()
+		poem.tags = request.POST.get('tags').strip().split(' ')
+		poem.put()
 		redirect_to(h.url_for(action="show", id=Poems.key()))
 	
 	def delete(self, id):
@@ -135,13 +141,25 @@ class PoemsController(BaseController):
 				Tags.delete()
 			else:
 				Tags.put()
-		Poems.delete()
+		poem.delete()
+		
+		userMeta = model.UserMetadata.all().filter('user = ', self.user).get()
+		if userMeta:
+			userMeta.poem_count -= 1
+			userMeta.put()
 		redirect_to("/")
 	
 	def author(self, id):
 		c.poems = page_this(model.Poems.all().filter('author = ', users.User(id)).order('-created'))
 		return render('/poems/index.mako')
 	
+	def mine(self):
+		if not self.user:
+			redirect_to(users.create_login_url(url_for(controller="poems", action="mine")))
+		else:
+			c.poems = page_this(model.Poems.all().filter('author = ', self.user).order('-created'))
+			return render('/poems/index.mako')
+
 	def rss(self):
 		d = datetime.today().date() - timedelta(3) # Last 3 days worth of poems.
 		date = datetime(d.year, d.month, d.day)
