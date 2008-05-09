@@ -161,6 +161,7 @@ class PoemsController(BaseController):
 			redirect_to(users.create_login_url(url_for(controller="poems", action="mine")))
 		else:
 			c.poems = page_this(model.Poems.all().filter('author = ', self.user).order('-created'))
+			c.title = "your poems"
 			return render('/poems/index.mako')
 	
 	def rss(self):
@@ -187,5 +188,6 @@ class PoemsController(BaseController):
 			redirect_to(users.create_login_url(url_for(controller="poems", action="favourites")))
 		else:
 			c.poems = page_this(model.Poems.all().filter('favourites = ', self.user).order('-created'))
+			c.title = "your favourite poems"
 			return render('/poems/index.mako')
 	

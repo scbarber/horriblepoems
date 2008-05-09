@@ -30,20 +30,20 @@ indexes:
   - name: created
     direction: desc
 
-# Used 7 times in query history.
+# Used 20 times in query history.
 - kind: Poems
   properties:
   - name: author
   - name: created
     direction: desc
 
-# Used 5 times in query history.
+# Used 8 times in query history.
 - kind: Poems
   properties:
   - name: created
     direction: desc
 
-# Used once in query history.
+# Used 3 times in query history.
 - kind: Poems
   properties:
   - name: favourites
@@ -63,14 +63,14 @@ indexes:
     direction: desc
   - name: tag
 
-# Used 89 times in query history.
+# Used 132 times in query history.
 - kind: Tags
   properties:
   - name: count
     direction: desc
   - name: tag
 
-# Used 37 times in query history.
+# Used 80 times in query history.
 - kind: UserMetadata
   properties:
   - name: poem_count

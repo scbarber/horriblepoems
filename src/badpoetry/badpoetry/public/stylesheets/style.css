@@ -32,6 +32,12 @@ DIV#menu h3 {
 }
 DIV#menu DIV { padding: 0.4em 1em; }
 
+H1.title {
+	color: #0078D3;
+	text-align: center;
+	font-size: 2.5em;
+	font-family: Georgia, serif;
+}
 
 DIV.flash { color: green; }
 .error-message { color: #b22222; font-weight: bold; background-color: #FFDDE4; padding: 2px 5px; }
@@ -74,6 +80,8 @@ div.autocomplete ul li {
 	cursor: pointer;
 }
 
+DIV#footer { text-align: center; font-size: .7em; font-style: oblique; width: 50%; margin: 0 auto; border-top: 1px dotted #bbb; color: #bbb; padding-top: 1em; }
+DIV#footer EM { font-style: normal; color: #aaa; }
 
 /* Import from seth.css from original bad poetry */
 a, a:link, a:visited {

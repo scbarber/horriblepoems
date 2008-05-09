@@ -17,6 +17,10 @@
 	}
 </script>
 
+% if c.title:
+<h1 class="title">${c.title.capitalize()}</h1>
+% endif
+
 <style type="text/css">DIV#add_poem { display: none; }</style>
 % if c.user:
 <div id="add"><span class="add" onclick="if($('add_poem').style.display == 'block') $('add_poem').style.display = 'none'; else $('add_poem').style.display = 'block';">+ Add a poem</span></div>
@@ -27,16 +31,16 @@ ${pager()}
 
 % for p in c.poems:
 <div class="poem">
-	% if c.user:
-		<%
-			if c.user in p.favourites: img = "fav.png"
-			else:	img = "no_fav.png"
-		%>
-		<img style="cursor: pointer" class="favourite" src="/images/${img}" onclick="new Ajax.Request('${h.url_for(controller="poems", action="favourite", id=p.key())}'); toggle_fav(this);">
-	% endif
 	<h3>${p.title}</h3>
 	<div class="author">by ${p.author.nickname()}</div>
 	<div class="meta">
+		% if c.user:
+			<%
+				if c.user in p.favourites: img = "fav.png"
+				else:	img = "no_fav.png"
+			%>
+			<img style="cursor: pointer" class="favourite" src="/images/${img}" onclick="new Ajax.Request('${h.url_for(controller="poems", action="favourite", id=p.key())}'); toggle_fav(this);">
+		% endif
 		<div class="date">${p.created.strftime("%Y.%m.%d %H:%M")}</div>
 		<div class="tags">
 			${', '.join([h.link_to(tag, h.url(controller="tags", action="show", id=tag)) for tag in p.tags])}

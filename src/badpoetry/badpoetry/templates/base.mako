@@ -23,6 +23,7 @@
 <body>
 	<div id="header"><img src="/images/header.gif"></div>
 	<div id="menu">
+		<div style="float: left"><a href="/">[home]</a></div>
 		${self.flash()}
 		<div id="user_menu">
 		<% 
@@ -64,5 +65,7 @@
 	</div>
 
 	${next.body()}
+	
+	<div id="footer">made in collaboration with <em>purple monkey dishwasher</em> and <em>vintage electricity</em></div>
 </body>
 </html>
