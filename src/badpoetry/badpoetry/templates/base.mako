@@ -17,6 +17,8 @@
 	<title>Bad Poetry | ${self.title()}</title>
   ${h.stylesheet_link_tag('style.css')}
 	${h.auto_discovery_link_tag("http://%s/rss" % (request.host))}
+	${h.javascript_include_tag('prototype')}
+	${h.javascript_include_tag('scriptaculous')}
 </head>
 <body>
 	<div id="header"><img src="/images/header.gif"></div>

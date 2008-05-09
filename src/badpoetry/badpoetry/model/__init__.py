@@ -15,7 +15,7 @@ class Tags(db.Model):
 	tag = db.StringProperty(unicode)
 	count = db.IntegerProperty()
 
-class UserMetadata(db.Expando):
+class UserMetadata(db.Model):
 	user = db.UserProperty()
 	poem_count = db.IntegerProperty()
 	favourites = db.ListProperty(db.Key)

@@ -46,6 +46,7 @@ class TagsController(BaseController):
 	
 	def suggest(self):
 		tag = request.params.get('tag')
+		if not tag: return None
 		c.tags = model.Tags.all().filter('tag >= ', tag).filter('tag <= ', inc_string(tag))
 		return render('/tags/suggest.mako')
 	

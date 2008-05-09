@@ -56,7 +56,7 @@ indexes:
     direction: desc
   - name: tag
 
-# Used 107 times in query history.
+# Used 261 times in query history.
 - kind: Tags
   properties:
   - name: count

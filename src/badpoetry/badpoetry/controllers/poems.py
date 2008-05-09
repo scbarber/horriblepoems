@@ -90,7 +90,7 @@ class PoemsController(BaseController):
 		if userMeta:
 			userMeta.poem_count += 1
 		else:
-			userMeta = model.UserMetadata(user=self.user, poem_count=1)
+			userMeta = model.UserMetadata(user=self.user, poem_count=1, favourites=[], poems_rated=[])
 		userMeta.put()
 		redirect_to('/')
 	
