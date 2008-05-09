@@ -3,6 +3,7 @@ BODY {
 	font-size: 0.9em;
 	margin: 0;
 	padding: 0;
+	background-color: #fafafa;
 }
 
 TABLE { border-collapse: collapse; }
@@ -23,12 +24,14 @@ LABEL {	font-weight: bold; display: block; }
 
 SPAN.count { font-style: oblique; color: #aaa; }
 
-#menu h3 {
+DIV#menu h3 {
 	font-family: Georgia, serif;
 	color: #aaa;
 	display: inline;
 	font-size: 1em;
 }
+DIV#menu DIV { padding: 0.4em 1em; }
+
 
 DIV.flash { color: green; }
 .error-message { color: #b22222; font-weight: bold; background-color: #FFDDE4; padding: 2px 5px; }
@@ -73,14 +76,6 @@ div.autocomplete ul li {
 
 
 /* Import from seth.css from original bad poetry */
-body {
-	font-family: Helvetica, Verdana, Sans-Serif;
-	margin: 0;
-	padding: 0;
-	background: #eee;
-	color: #333;
-}
-
 a, a:link, a:visited {
 	text-decoration: none;
 	color: #000;
@@ -101,27 +96,6 @@ a:hover, a:active {
 #content { margin: 1em; }
 
 #menu {	margin: 1em; }
-
-#menu #order_selector {
-	padding: 0.4em 1em;
-	background: #ccc;
-}
-
-#menu #tag_selector {
-	padding: 0.4em 1em;
-	background: #ddd;
-}
-
-#menu #date_selector {
-	padding: 0.4em 1em;
-	background: #bbb;
-}
-
-#menu #theme_selector {
-	padding: 0.4em 1em;
-	background: #aaa;
-}
-
 .poem {
 	border: 1px solid #ddd;
 	margin: 1em 1em 2em 1em;
@@ -178,9 +152,9 @@ a:hover, a:active {
 	color: #ddd;
 }
 
-body { background-color: #fafafa; }
+#menu #user_menu {	background-color: #fffff9; text-align: right; }
 #menu #tag_selector {	background-color: #ffffe9; }
-#menu #order_selector {	background-color: #ffffd9; }
+#menu #author_selector {	background-color: #ffffd9; }
 #menu #date_selector { background-color: #ffffc9; }
 #menu #theme_selector {	background-color: #ffffb9; }
 .poem {	background: #F5F5F5 none repeat scroll 0%; }

@@ -1,7 +1,7 @@
 from badpoetry.tests import *
 
-class TestPoemController(TestController):
+class TestPoemsController(TestController):
 
     def test_index(self):
-        response = self.app.get(url_for(controller='poem'))
+        response = self.app.get(url_for(controller='poems'))
         # Test response...

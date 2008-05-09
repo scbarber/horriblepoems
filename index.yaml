@@ -30,7 +30,7 @@ indexes:
   - name: created
     direction: desc
 
-# Unused in query history -- copied from input.
+# Used 7 times in query history.
 - kind: Poems
   properties:
   - name: author
@@ -43,6 +43,13 @@ indexes:
   - name: created
     direction: desc
 
+# Used once in query history.
+- kind: Poems
+  properties:
+  - name: favourites
+  - name: created
+    direction: desc
+
 # Unused in query history -- copied from input.
 - kind: Tag
   properties:
@@ -56,9 +63,22 @@ indexes:
     direction: desc
   - name: tag
 
-# Used 43 times in query history.
+# Used 89 times in query history.
 - kind: Tags
   properties:
   - name: count
     direction: desc
   - name: tag
+
+# Used 37 times in query history.
+- kind: UserMetadata
+  properties:
+  - name: poem_count
+    direction: desc
+
+# Used 7 times in query history.
+- kind: UserMetadata
+  properties:
+  - name: poem_count
+    direction: desc
+  - name: user

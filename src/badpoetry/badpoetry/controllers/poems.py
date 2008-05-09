@@ -151,7 +151,9 @@ class PoemsController(BaseController):
 		redirect_to("/")
 	
 	def author(self, id):
-		c.poems = page_this(model.Poems.all().filter('author = ', users.User(id)).order('-created'))
+		user = model.UserMetadata.get(id)
+		c.poems = page_this(model.Poems.all().filter('author = ', user.user).order('-created'))
+		c.title = "poems by %s" % (user.user.nickname())
 		return render('/poems/index.mako')
 	
 	def mine(self):
@@ -179,4 +181,11 @@ class PoemsController(BaseController):
 			poem.number_of_favourites += 1
 		poem.put()
 		return None
+	
+	def favourites(self):
+		if not self.user:
+			redirect_to(users.create_login_url(url_for(controller="poems", action="favourites")))
+		else:
+			c.poems = page_this(model.Poems.all().filter('favourites = ', self.user).order('-created'))
+			return render('/poems/index.mako')
 	

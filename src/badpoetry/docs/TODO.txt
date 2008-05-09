@@ -1,6 +1,4 @@
 Bulk Uploader (Import from current RoR incarnation)
-Filter by Author
-List Authors
 Ratings (-2 -> +2)
 
 

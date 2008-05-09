@@ -24,31 +24,40 @@
 	<div id="header"><img src="/images/header.gif"></div>
 	<div id="menu">
 		${self.flash()}
-		<div style="text-align: right">
+		<div id="user_menu">
 		<% 
 			from google.appengine.api import users
 			user = users.get_current_user()
 		%>
 		% if user:
-		${h.link_to('Logout', users.create_logout_url("/"))}
+			<a href="/poems/mine">My Poems</a> | 
+			<a href="/poems/favourites">My Favs</a> | 
+			${h.link_to('Logout', users.create_logout_url("/"))}
 		% else:
-		${h.link_to('Login', users.create_login_url("/"))}
+			${h.link_to('Login', users.create_login_url("/"))}
 		% endif
 		</div>
 		
 		<div id="tag_selector">
-			<h3>Filter by tag:</h3>
-			<a href="/">(All tags)</a>&nbsp;&nbsp;&nbsp;
+			<h3>Top 10 Tags:</h3>
+			<a href="/tags/" title="List of Tags">[list]</a>
 			% for tag in g.tags:
 				${h.link_to(tag.tag, h.url(controller='tags', action='show', id=tag.tag))} <span class="count">(${tag.count})</span>
 			% endfor
 		</div>
 
+		<div id="author_selector">
+			<h3>Top 10 Authors (by quantity):</h3>
+			<a href="/authors/" title="List of Authors">[list]</a>
+			% for author in g.authors:
+				${h.link_to(author.user.nickname(), h.url(controller='poems', action='author', id=author.key()))} <span class="count">(${author.poem_count})</span>
+			% endfor
+		</div>
+
 		<div id="date_selector">
 			<h3>Filter by date:</h3>
-			<a href="/">(Any date)</a>
-			<a href="/today">Today's Poems</a>
-			<a href="/week">This Week's Poems</a>
+			<a href="/today">Today's Poems</a> |
+			<a href="/week">This Week's Poems</a> |
 			<a href="/month">This Month's Poems</a>
 		</div>
 
