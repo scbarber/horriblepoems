@@ -43,6 +43,8 @@ A.add {
 	background-color: #F5F5F5;
 }
 
+IMG.favourite { float: right; }
+
 DIV.pager { text-align: center; }
 
 INPUT#tags { width: 250px; }
@@ -67,6 +69,8 @@ div.autocomplete ul li {
 	padding: 2px;
 	cursor: pointer;
 }
+
+
 /* Import from seth.css from original bad poetry */
 body {
 	font-family: Helvetica, Verdana, Sans-Serif;
@@ -131,7 +135,7 @@ a:hover, a:active {
 
 .poem .content { line-height: 1.4em; }
 .poem .content, .poem h3 {	padding-left: 260px; }
-.poem .author { font-size: 0.7em; font-style: oblique; padding-left: 280px; margin-top: -7px; }
+.poem .author { font-size: 0.8em; font-style: oblique; padding-left: 280px; margin-top: -7px; }
 
 .meta {
 	color: #444;

@@ -90,7 +90,7 @@ class PoemsController(BaseController):
 		if userMeta:
 			userMeta.poem_count += 1
 		else:
-			userMeta = model.UserMetadata(user=self.user, poem_count=1, favourites=[], poems_rated=[])
+			userMeta = model.UserMetadata(user=self.user, poem_count=1)
 		userMeta.put()
 		redirect_to('/')
 	
@@ -166,4 +166,16 @@ class PoemsController(BaseController):
 		c.poems = page_this(model.Poems.all().filter('created > ', date))
 		response.headers['content-type'] = 'application/rss+xml'
 		return render('/rss2.mako')
+	
+	def favourite(self, id):
+		if self.user == None: return None
+		poem = model.Poems.get(id)
+		if self.user in poem.favourites:
+			poem.favourites.remove(self.user)
+			poem.number_of_favourites -= 1
+		else:
+			poem.favourites.append(self.user)
+			poem.number_of_favourites += 1
+		poem.put()
+		return None
 	

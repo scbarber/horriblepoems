@@ -8,9 +8,18 @@
 %endif
 </%def>
 
+<script type="text/javascript">
+	function toggle_fav(img) {
+		if(img.src.match("no_"))
+			img.src = img.src.replace(/no_/, "");
+		else
+			img.src = img.src.replace(/fav/, "no_fav");
+	}
+</script>
+
 <style type="text/css">DIV#add_poem { display: none; }</style>
 % if c.user:
-<div id="add"><a href="#" class="add" onclick="document.getElementById('add_poem').style.display = 'block'">+ Add a poem</a></div>
+<div id="add"><a href="#" class="add" onclick="if($('add_poem').style.display == 'block') $('add_poem').style.display = 'none'; else $('add_poem').style.display = 'block';">+ Add a poem</a></div>
 % endif
 <%include file="/elements/new_poem.mako" />
 
@@ -18,6 +27,13 @@ ${pager()}
 
 % for p in c.poems:
 <div class="poem">
+	% if c.user:
+		<%
+			if c.user in p.favourites: img = "fav.png"
+			else:	img = "no_fav.png"
+		%>
+		<img style="cursor: pointer" class="favourite" src="/images/${img}" onclick="new Ajax.Request('${h.url_for(action="favourite", id=p.key())}'); toggle_fav(this);">
+	% endif
 	<h3>${p.title}</h3>
 	<div class="author">by ${p.author.nickname()}</div>
 	<div class="meta">

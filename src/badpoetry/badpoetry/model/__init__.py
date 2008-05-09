@@ -1,14 +1,15 @@
 from google.appengine.ext import db
+from google.appengine.api import users
 
 class Poems(db.Model):
 	author = db.UserProperty()
-	title = db.StringProperty(unicode)
-	content = db.TextProperty(unicode)
+	title = db.StringProperty(unicode, required=True)
+	content = db.TextProperty(unicode, required=True)
 	tags = db.ListProperty(unicode)
-	rating = db.FloatProperty() # 3.4 stars
-	total_ratings = db.IntegerProperty() # 17
-	number_of_ratings = db.IntegerProperty() # 5
-	favorited = db.IntegerProperty() # 3 (3 people marked this as a favourite)
+	score = db.IntegerProperty()
+	number_of_ratings = db.IntegerProperty(default=0)
+	favourites = db.ListProperty(users.User)
+	number_of_favourites = db.IntegerProperty(default=0)
 	created = db.DateTimeProperty(auto_now_add=True)
 
 class Tags(db.Model):
@@ -18,7 +19,6 @@ class Tags(db.Model):
 class UserMetadata(db.Model):
 	user = db.UserProperty()
 	poem_count = db.IntegerProperty()
-	favourites = db.ListProperty(db.Key)
 	poems_rated = db.ListProperty(db.Key)
 
 # Validation Schtuff
