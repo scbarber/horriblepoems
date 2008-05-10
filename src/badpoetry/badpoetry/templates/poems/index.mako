@@ -3,7 +3,7 @@
 <%def name="pager()">
 % if hasattr(c.poems, 'pager'):
 <div class="pager">
-	${c.poems.pager('~2~')}
+	${c.poems.pager(format='$link_previous ~2~ $link_next', symbol_previous="&laquo; Previous", symbol_next="Next &raquo;")}
 </div>
 %endif
 </%def>
