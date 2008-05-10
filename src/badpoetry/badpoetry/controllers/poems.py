@@ -191,3 +191,29 @@ class PoemsController(BaseController):
 			c.title = "your favourite poems"
 			return render('/poems/index.mako')
 	
+	def put(self):
+		self.user = users.User(request.POST.get('author'))
+		p = model.Poems()
+		p.title = request.POST.get('title')
+		p.content = request.POST.get('content')
+		p.tags = [db.Category(tag.strip()) for tag in request.POST.get('tags').lower().split(',')]
+		p.author = self.user
+		p.created = request.POST.get('created_at')
+		p.put()
+
+		for tag in p.tags:
+			t = model.Tags.all().filter('tag = ', tag).get()
+			if t:
+				t.count = t.count + 1
+			else:
+				t = model.Tags(tag=tag, count=1)
+			t.put()
+
+		userMeta = model.UserMetadata.all().filter('user = ', self.user).get()
+		if userMeta:
+			userMeta.poem_count += 1
+		else:
+			userMeta = model.UserMetadata(user=self.user, poem_count=1)
+		userMeta.put()
+		redirect_to('/')
+	
