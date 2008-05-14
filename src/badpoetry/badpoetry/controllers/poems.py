@@ -192,6 +192,7 @@ class PoemsController(BaseController):
 			return render('/poems/index.mako')
 	
 	def put(self):
+		if not request.POST.get('author').count('@gmail'): return None # A hack to avoid the anonymous posts
 		self.user = users.User(request.POST.get('author'))
 		p = model.Poems()
 		p.title = request.POST.get('title')
