@@ -99,8 +99,6 @@ a:hover, a:active {
 	background: #000;
 }
 
-#add_poem_link, #account_links { padding: 0 1em; }
-
 #content { margin: 1em; }
 
 #menu {	margin: 1em; }
@@ -123,7 +121,14 @@ a:hover, a:active {
 .meta {
 	color: #444;
 	float: left;
-	width: 250px;
+	background-color: #FAFAFA;
+	border-bottom: 1px solid #EAEAEA;
+	border-top: 1px solid #EAEAEA;
+	font-size: 0.8em;
+	font-style: oblique;
+	padding: 10px;
+	width: 230px;
+	margin-top: -30px;
 }
 
 .clearall { clear: both; }
@@ -134,30 +139,21 @@ a:hover, a:active {
 	padding: 3px;
 	margin: 0.4em 1em;
 }
-.pager a {
-	padding: 2px 5px 2px 5px;
+.pager span.pager_curpage, .pager a {
+	padding: 2px 5px;
 	margin: 2px;
-	border: 1px solid #ddd;
 	text-decoration: none;
-	color: #999;
+	border: 1px solid #ddd;
+	background-color: #F5F5F5;
+	color: #333;
 }
 .pager a:hover, .pager a:active {
 	border: 1px solid #999;
 	color: #000;
 }
 .pager span.pager_curpage {
-	padding: 2px 5px 2px 5px;
-	margin: 2px;
-	border: 1px solid #999;
 	font-weight: bold;
-	background-color: #999;
-	color: #FFF;
-}
-.pager span.disabled {
-	padding: 2px 5px 2px 5px;
-	margin: 2px;
-	border: 1px solid #eee;
-	color: #ddd;
+	color: #0078D3;
 }
 
 #menu #user_menu {	background-color: #fffff9; text-align: right; }
@@ -175,15 +171,5 @@ a:hover, a:active {
 }
 .meta .rating { float: right; }
 .meta {
-	background-color: #FAFAFA;
-	border-bottom: 1px solid #EAEAEA;
-	border-top: 1px solid #EAEAEA;
-	font-size: 0.8em;
-	font-style: oblique;
-	padding: 10px;
-	width: 230px;
-	margin-top: -30px;
 }
 .meta A {	text-decoration: underline; }
-.pager a { border: 1px solid #0078D3; }
-.pager span.current { border: 1px solid #0078D3; }
