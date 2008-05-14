@@ -198,7 +198,7 @@ class PoemsController(BaseController):
 		p.content = request.POST.get('content')
 		p.tags = [db.Category(tag.strip()) for tag in request.POST.get('tags').lower().split(',')]
 		p.author = self.user
-		p.created = request.POST.get('created_at')
+		p.created = datetime.fromtimestamp(request.POST.get('created_at'))
 		p.put()
 
 		for tag in p.tags:
