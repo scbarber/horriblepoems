@@ -42,6 +42,13 @@ ${pager()}
 			<img style="cursor: pointer" class="favourite" src="/images/${img}" onclick="new Ajax.Request('${h.url_for(controller="poems", action="favourite", id=p.key())}'); toggle_fav(this);">
 		% endif
 		<div class="date">${p.created.strftime("%Y.%m.%d %H:%M")}</div>
+		<div class="score">
+			Score: <span id="score-${p.key()}">${p.score}</span>
+			% if c.user:
+			<span class="ajax_link" onclick="new Ajax.Updater('score-${p.key()}', '${h.url_for(controller="poems", action="rate", id=p.key())}');">Rate this poem</span>
+			% endif
+		</div>
+		<div id="rating-${p.key()}"></div>
 		<div class="tags">
 			${', '.join([h.link_to(tag, h.url(controller="tags", action="show", id=tag)) for tag in p.tags])}
 		</div>

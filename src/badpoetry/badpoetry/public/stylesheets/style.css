@@ -83,13 +83,15 @@ div.autocomplete ul li {
 DIV#footer { text-align: center; font-size: .7em; font-style: oblique; width: 50%; margin: 0 auto; border-top: 1px dotted #bbb; color: #bbb; padding-top: 1em; }
 DIV#footer EM { font-style: normal; color: #aaa; }
 
+SPAN.ajax_link { cursor: pointer; color: #000; text-decoration: underline; }
+
 /* Import from seth.css from original bad poetry */
 a, a:link, a:visited {
 	text-decoration: none;
 	color: #000;
 }
 
-a:hover, a:active {
+a:hover, a:active, SPAN.ajax_link:hover {
 	text-decoration: underline;
 	background: #fff;
 }

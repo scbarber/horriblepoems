@@ -31,6 +31,7 @@
 			user = users.get_current_user()
 		%>
 		% if user:
+			Welcome ${user.nickname()}! || 
 			<a href="/poems/mine">My Poems</a> | 
 			<a href="/poems/favourites">My Favs</a> | 
 			${h.link_to('Logout', users.create_logout_url("/"))}

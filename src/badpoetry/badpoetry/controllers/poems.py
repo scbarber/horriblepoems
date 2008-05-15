@@ -218,3 +218,34 @@ class PoemsController(BaseController):
 		userMeta.put()
 		redirect_to('/')
 	
+	def rate(self, id):
+		if self.user == None: return None
+		c.poem = model.Poems.get(id)
+		if self.user in c.poem.scored_by:
+			previous = model.Ratings.all().filter('user = ', self.user).filter('poem = ', c.poem.key()).get()
+			c.score = previous.score
+		return render('/elements/ratings.mako')
+		
+	def score(self, id):
+		if self.user == None: return None
+		score = int(request.POST.get('score'))
+		if score < -2 or score > 2: return None # invalid range
+		
+		poem = model.Poems.get(id)
+		if self.user in poem.scored_by:
+			previous = model.Ratings.all().filter('user = ', self.user).filter('poem = ', poem.key()).get()
+			poem.score -= previous.score
+			previous.score = score
+		else:
+			poem.scored_by.append(self.user)
+			previous = model.Ratings()
+			previous.poem = poem.key()
+			previous.user = self.user
+			previous.score = score
+
+		if poem.score: poem.score += score
+		else: poem.score = score
+		poem.put()
+		previous.put()
+		return(str(poem.score))
+	

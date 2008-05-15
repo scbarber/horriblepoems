@@ -7,7 +7,7 @@ class Poems(db.Model):
 	content = db.TextProperty(unicode)
 	tags = db.ListProperty(db.Category)
 	score = db.IntegerProperty()
-	number_of_ratings = db.IntegerProperty(default=0)
+	scored_by = db.ListProperty(users.User)
 	favourites = db.ListProperty(users.User)
 	number_of_favourites = db.IntegerProperty(default=0)
 	created = db.DateTimeProperty(auto_now_add=True)
@@ -19,7 +19,11 @@ class Tags(db.Model):
 class UserMetadata(db.Model):
 	user = db.UserProperty()
 	poem_count = db.IntegerProperty()
-	poems_rated = db.ListProperty(db.Key)
+
+class Ratings(db.Model):
+	poem = db.Key
+	user = db.UserProperty()
+	score = db.IntegerProperty()
 
 # Validation Schtuff
 import formencode
