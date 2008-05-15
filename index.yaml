@@ -10,34 +10,41 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Unused in query history -- copied from input.
+# Used once in query history.
 - kind: Poems
   properties:
   - name: author
   - name: created
     direction: desc
 
-# Used 35 times in query history.
+# Used 36 times in query history.
 - kind: Poems
   properties:
   - name: created
     direction: desc
 
-# Used 3 times in query history.
+# Used 9 times in query history.
 - kind: Ratings
   properties:
   - name: poem
   - name: user
 
-# Used 311 times in query history.
+# Used 326 times in query history.
 - kind: Tags
   properties:
   - name: count
     direction: desc
   - name: tag
 
-# Used 311 times in query history.
+# Used 326 times in query history.
 - kind: UserMetadata
   properties:
   - name: poem_count
     direction: desc
+
+# Used once in query history.
+- kind: UserMetadata
+  properties:
+  - name: poem_count
+    direction: desc
+  - name: user

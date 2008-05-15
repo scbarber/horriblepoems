@@ -19,6 +19,7 @@ class Tags(db.Model):
 class UserMetadata(db.Model):
 	user = db.UserProperty()
 	poem_count = db.IntegerProperty()
+	score = db.IntegerProperty()
 
 class Ratings(db.Model):
 	poem = db.ReferenceProperty()
