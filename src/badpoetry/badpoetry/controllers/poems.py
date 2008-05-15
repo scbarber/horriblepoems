@@ -225,7 +225,7 @@ class PoemsController(BaseController):
 			previous = model.Ratings.all().filter('user = ', self.user).filter('poem = ', c.poem.key()).get()
 			c.score = previous.score
 		return render('/elements/ratings.mako')
-		
+	
 	def score(self, id):
 		if self.user == None: return None
 		score = int(request.POST.get('score'))
@@ -242,10 +242,10 @@ class PoemsController(BaseController):
 			previous.poem = poem.key()
 			previous.user = self.user
 			previous.score = score
-
+		
+		previous.put()
 		if poem.score: poem.score += score
 		else: poem.score = score
 		poem.put()
-		previous.put()
 		return(str(poem.score))
 	
