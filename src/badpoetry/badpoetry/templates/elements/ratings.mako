@@ -1,5 +1,6 @@
 <%
 	scores = {
+		None:"",
 		-2:"THAT'S NOT BAD!  THAT'S GOOD POETRY!",
 		-1:"Heh.  I enjoyed that one.",
 		0:"Meh.",
