@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime, timedelta
-import paginate
+from badpoetry.lib import paginate
 
 from google.appengine.ext import db
 from google.appengine.api import users

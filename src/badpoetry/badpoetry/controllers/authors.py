@@ -1,5 +1,4 @@
 import logging
-import paginate
 from badpoetry.lib.base import *
 
 log = logging.getLogger(__name__)
