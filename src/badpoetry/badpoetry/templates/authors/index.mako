@@ -5,6 +5,6 @@
 
 <ul>
 % for author in c.authors:
-	<li>${h.link_to(author.user.nickname(), h.url(controller='poems', action='author', id=author.key()))} <span class="count">(${author.poem_count})</span></li>
+	<li>${h.link_to(author.user.nickname(), h.url(controller='poems', action='author', id=author.key()))} <span class="count">(${author.poem_count} poems)</span> <span class="score">(Score: ${author.score})</span></li>
 % endfor
 </ul>

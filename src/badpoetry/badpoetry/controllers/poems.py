@@ -191,33 +191,6 @@ class PoemsController(BaseController):
 			c.title = "your favourite poems"
 			return render('/poems/index.mako')
 	
-	def put(self):
-		if not request.POST.get('author').count('@gmail'): return None # A hack to avoid the anonymous posts
-		self.user = users.User(request.POST.get('author'))
-		p = model.Poems()
-		p.title = request.POST.get('title')
-		p.content = request.POST.get('content')
-		p.tags = [db.Category(tag.strip()) for tag in request.POST.get('tags').lower().split(',')]
-		p.author = self.user
-		p.created = datetime.fromtimestamp(float(request.POST.get('created_at')))
-		p.put()
-
-		for tag in p.tags:
-			t = model.Tags.all().filter('tag = ', tag).get()
-			if t:
-				t.count = t.count + 1
-			else:
-				t = model.Tags(tag=tag, count=1)
-			t.put()
-
-		userMeta = model.UserMetadata.all().filter('user = ', self.user).get()
-		if userMeta:
-			userMeta.poem_count += 1
-		else:
-			userMeta = model.UserMetadata(user=self.user, poem_count=1)
-		userMeta.put()
-		redirect_to('/')
-	
 	def rate(self, id):
 		if self.user == None: return None
 		c.poem = model.Poems.get(id)
@@ -225,27 +198,48 @@ class PoemsController(BaseController):
 			previous = model.Ratings.all().filter('user = ', self.user).filter('poem = ', c.poem.key()).get()
 			c.score = previous.score
 		return render('/elements/ratings.mako')
-		
+	
 	def score(self, id):
 		if self.user == None: return None
-		score = int(request.POST.get('score'))
+
+		try:
+			int(request.POST.get('score'))
+		except:
+			score = 0
+			delete = True
+		else:
+			score = int(request.POST.get('score')) 
+
 		if score < -2 or score > 2: return None # invalid range
 		
 		poem = model.Poems.get(id)
+		author = model.UserMetadata.all().filter('user = ', poem.author).get()
 		if self.user in poem.scored_by:
 			previous = model.Ratings.all().filter('user = ', self.user).filter('poem = ', poem.key()).get()
 			poem.score -= previous.score
 			previous.score = score
+			author.score -= previous.score
+			if delete:
+				del(poem.scored_by[poem.scored_by.index(self.user)])
 		else:
 			poem.scored_by.append(self.user)
 			previous = model.Ratings()
 			previous.poem = poem.key()
 			previous.user = self.user
 			previous.score = score
-
-		if poem.score: poem.score += score
-		else: poem.score = score
+		
+		if delete: previous.delete()
+		else: previous.put()
+		
+		if len(poem.scored_by) < 1:
+			poem.score = None
+		else:
+			if poem.score: poem.score += score
+			else: poem.score = score
 		poem.put()
-		previous.put()
+
+		if author.score: author.score += score
+		else: author.score = score
+		author.put()
 		return(str(poem.score))
 	

@@ -31,8 +31,6 @@ ${pager()}
 
 % for p in c.poems:
 <div class="poem">
-	<h3>${p.title}</h3>
-	<div class="author">by ${p.author.nickname()}</div>
 	<div class="meta">
 		% if c.user:
 			<%
@@ -45,7 +43,7 @@ ${pager()}
 		<div class="score">
 			Score: <span id="score-${p.key()}">${p.score}</span>
 			% if c.user:
-			<span class="ajax_link" onclick="new Ajax.Updater('score-${p.key()}', '${h.url_for(controller="poems", action="rate", id=p.key())}');">Rate this poem</span>
+			<span class="ajax_link" onclick="new Ajax.Updater('rating-${p.key()}', '${h.url_for(controller="poems", action="rate", id=p.key())}');$('rating-${p.key()}').show()">Rate this poem</span>
 			% endif
 		</div>
 		<div id="rating-${p.key()}"></div>
@@ -63,6 +61,8 @@ ${pager()}
 		</div>
 	</div>
 	<div class="content">
+		<h3>${p.title}</h3>
+		<div class="author">by ${p.author.nickname()}</div>
 		${h.simple_format(p.content)}
 	</div>
 	<div class="clearall"></div>
