@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime, timedelta
-import paginate
+from badpoetry.lib import paginate
 
 from google.appengine.ext import db
 from google.appengine.api import users
@@ -201,7 +201,16 @@ class PoemsController(BaseController):
 	
 	def score(self, id):
 		if self.user == None: return None
-		score = int(request.POST.get('score'))
+
+		try:
+			int(request.POST.get('score'))
+		except:
+			score = 0
+			delete = True
+		else:
+			score = int(request.POST.get('score')) 
+			delete = False
+
 		if score < -2 or score > 2: return None # invalid range
 		
 		poem = model.Poems.get(id)
@@ -211,6 +220,8 @@ class PoemsController(BaseController):
 			poem.score -= previous.score
 			previous.score = score
 			author.score -= previous.score
+			if delete:
+				del(poem.scored_by[poem.scored_by.index(self.user)])
 		else:
 			poem.scored_by.append(self.user)
 			previous = model.Ratings()
@@ -218,9 +229,14 @@ class PoemsController(BaseController):
 			previous.user = self.user
 			previous.score = score
 		
-		previous.put()
-		if poem.score: poem.score += score
-		else: poem.score = score
+		if delete: previous.delete()
+		else: previous.put()
+		
+		if len(poem.scored_by) < 1:
+			poem.score = None
+		else:
+			if poem.score: poem.score += score
+			else: poem.score = score
 		poem.put()
 
 		if author.score: author.score += score

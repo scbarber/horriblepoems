@@ -1,5 +1,5 @@
 import logging
-import paginate
+from badpoetry.lib import paginate
 from badpoetry.lib.base import *
 from google.appengine.ext import db
 from urllib import unquote_plus
