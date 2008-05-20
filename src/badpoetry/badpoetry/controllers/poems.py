@@ -75,7 +75,9 @@ class PoemsController(BaseController):
 		p = model.Poems()
 		p.title = request.POST.get('title')
 		p.content = request.POST.get('content')
-		p.tags = [db.Category(tag.strip()) for tag in request.POST.get('tags').lower().split(',')]
+		tags = request.POST.get('tags')
+		if tags:
+			p.tags = [db.Category(tag.strip()) for tag in tags.lower().split(',')]
 		p.author = self.user
 		p.put()
 		

@@ -5,7 +5,7 @@ class Poems(db.Model):
 	author = db.UserProperty()
 	title = db.StringProperty(unicode)
 	content = db.TextProperty(unicode)
-	tags = db.ListProperty(db.Category)
+	tags = db.ListProperty(db.Category, default=[])
 	score = db.IntegerProperty()
 	scored_by = db.ListProperty(users.User)
 	favourites = db.ListProperty(users.User)
