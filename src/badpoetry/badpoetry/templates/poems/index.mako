@@ -17,7 +17,7 @@
 	}
 </script>
 
-% if c.title:
+% if c.title and request.urlvars['controller'] != u'poems' and request.urlvars['action'] != u'show':
 <h1 class="title">${c.title.capitalize()}</h1>
 % endif
 
