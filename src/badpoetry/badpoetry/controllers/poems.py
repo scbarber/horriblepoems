@@ -209,6 +209,7 @@ class PoemsController(BaseController):
 			delete = True
 		else:
 			score = int(request.POST.get('score')) 
+			delete = False
 
 		if score < -2 or score > 2: return None # invalid range
 		
