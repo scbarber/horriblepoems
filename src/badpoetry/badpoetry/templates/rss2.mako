@@ -1,8 +1,8 @@
-<% from time import gmtime, strftime %>
 <?xml version="1.0"?>
+<% from time import gmtime, strftime %>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 	<channel>
-		<title>badPoetry</title>
+		<title>Bad Poetry</title>
 		<link>${request.scheme}://${request.host}</link>
 		<description>Bad Poetry</description>
 		<language>en-us</language>
