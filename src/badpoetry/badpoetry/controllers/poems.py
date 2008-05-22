@@ -171,7 +171,7 @@ class PoemsController(BaseController):
 		date = datetime(d.year, d.month, d.day)
 		c.poems = page_this(model.Poems.all().filter('created > ', date))
 		if c.poems.item_count < 15:
-			c.poems = page_this(model.Poems.all().fetch(15))
+			c.poems = page_this(model.Poems.all().order('-created').fetch(15))
 		response.headers['content-type'] = 'application/rss+xml'
 		return render('/rss2.mako')
 	
