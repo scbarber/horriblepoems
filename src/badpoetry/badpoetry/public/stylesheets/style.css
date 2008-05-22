@@ -172,3 +172,7 @@ a:hover, a:active, SPAN.ajax_link:hover {
 #menu #date_selector { background-color: #ffffc9; }
 #menu #theme_selector {	background-color: #ffffb9; }
 .meta A {	text-decoration: underline; }
+
+A IMG { border: 0; }
+DIV#footer A IMG { vertical-align: middle; }
+DIV#footer A:hover { text-decoration: none; background: transparent; }

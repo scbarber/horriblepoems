@@ -67,6 +67,9 @@
 
 	${next.body()}
 	
-	<div id="footer">made in collaboration with <em>purple monkey dishwasher</em> and <em>vintage electricity</em></div>
+	<div id="footer">
+		made in collaboration with <em>purple monkey dishwasher</em> and <em>vintage electricity</em><br/>
+		${h.link_to('<img src="/images/rss.png" width="38" height="39" border="0"/>', "http://%s/rss" % (request.host))}
+	</div>
 </body>
 </html>
