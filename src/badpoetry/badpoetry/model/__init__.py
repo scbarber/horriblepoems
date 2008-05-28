@@ -22,7 +22,7 @@ class UserMetadata(db.Model):
 	score = db.IntegerProperty()
 
 class Ratings(db.Model):
-	poem = db.ReferenceProperty()
+	poem = db.ReferenceProperty(Poems)
 	user = db.UserProperty()
 	score = db.IntegerProperty()
 
