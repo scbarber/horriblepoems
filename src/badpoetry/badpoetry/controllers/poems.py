@@ -73,9 +73,9 @@ class PoemsController(BaseController):
 			redirect_to(users.create_login_url('/create'))
 			return None
 		p = model.Poems()
-		p.title = request.POST.get('title')
-		p.content = request.POST.get('content')
-		tags = request.POST.get('tags')
+		p.title = h.util.html_escape(request.POST.get('title'))
+		p.content = h.util.html_escape(request.POST.get('content'))
+		tags = h.util.html_escape(request.POST.get('tags'))
 		if tags:
 			p.tags = [db.Category(tag.strip()) for tag in tags.lower().split(',')]
 		p.author = self.user
@@ -104,11 +104,11 @@ class PoemsController(BaseController):
 			session['flash'] = "You can only edit your own poems."
 			session.save()
 			send_back()
-		poem.title = self.form_result.get('title')
-		poem.content = self.form_result.get('content')
+		poem.title = h.util.html_escape(self.form_result.get('title'))
+		poem.content = h.util.html_escape(self.form_result.get('content'))
 		
 		# The following two loops will find all changed tags and account for them
-		tags = [tag.strip() for tag in request.POST.get('tags').lower().split(',')]
+		tags = [tag.strip() for tag in h.util.html_escape(request.POST.get('tags')).lower().split(',')]
 		for t in poem.tags:
 			if not t in tags:
 				tag = model.Tags.all().filter('tag = ', t).get()
