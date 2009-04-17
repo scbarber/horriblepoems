@@ -112,11 +112,11 @@ class PoemsController(BaseController):
 		for t in poem.tags:
 			if not t in tags:
 				tag = model.Tags.all().filter('tag = ', t).get()
-				Tags.count = Tags.count - 1
-				if Tags.count == 0:
-					Tags.delete()
+				tag.count = tag.count - 1
+				if tag.count == 0:
+					tag.delete()
 				else:
-					Tags.put()
+					tag.put()
 			else:
 				tags.remove(t)
 
