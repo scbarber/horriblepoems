@@ -9,9 +9,12 @@ from badpoetry.lib.base import *
 
 log = logging.getLogger(__name__)
 
-def page_this(poems):
+def page_this(query):
 	page = request.GET.get('page_nr') or 1
-	return(paginate.Page([poem for poem in poems], items_per_page=10, current_page=page))
+	offset = (page - 1) * 10
+	poems = [[]] * offset # A hack for the paginate thingy down there.  It will actually skip stuff in the sequence and I'm too lazy to write my own pagination.
+	poems = poems + query.fetch(10, offset)
+	return(paginate.Page(poems, items_per_page=10, current_page=page, item_count=query.count()))
 
 class PoemsController(BaseController):
 	def index(self):
