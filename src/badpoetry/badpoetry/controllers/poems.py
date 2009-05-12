@@ -11,6 +11,7 @@ log = logging.getLogger(__name__)
 
 def page_this(query):
 	page = request.GET.get('page_nr') or 1
+	page = int(page)
 	offset = (page - 1) * 10
 	poems = [[]] * offset # A hack for the paginate thingy down there.  It will actually skip stuff in the sequence and I'm too lazy to write my own pagination.
 	poems = poems + query.fetch(10, offset)
@@ -172,9 +173,9 @@ class PoemsController(BaseController):
 	def rss(self):
 		d = datetime.today().date() - timedelta(3) # Last 3 days worth of poems.
 		date = datetime(d.year, d.month, d.day)
-		c.poems = page_this(model.Poems.all().filter('created > ', date))
-		if c.poems.item_count < 15:
-			c.poems = page_this(model.Poems.all().order('-created').fetch(15))
+		c.poems = model.Poems.all().filter('created > ', date)
+		if c.poems.count() < 15:
+			c.poems = model.Poems.all().order('-created').fetch(15)
 		response.headers['content-type'] = 'application/rss+xml'
 		return render('/rss2.mako')
 	
